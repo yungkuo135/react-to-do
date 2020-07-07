@@ -24,7 +24,7 @@ class App extends Component {
   render() {
     return (
       <ThemeProvider theme={Theme}>
-        <BrowserRouter>
+        <BrowserRouter basename="/react-to-do">
           <div className="App">
             <Toolbar className="home_info">
               <div className="info_title">
