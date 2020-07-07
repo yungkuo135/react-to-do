@@ -18,11 +18,10 @@ class App extends Component {
   };
   handleInput = (e) => {
     this.setState({
-      text: e.target.value,
+      text: e.target.value.trim(),
     });
   };
   render() {
-    console.log(this.props);
     return (
       <ThemeProvider theme={Theme}>
         <BrowserRouter>
@@ -33,8 +32,14 @@ class App extends Component {
               </div>
               <form className="search_section">
                 <div className="search_bar">
-                  <Link to={`/search/${this.state.text}`}>
-                    <Button className="search_icon">
+                  <Link
+                    to={
+                      this.state.text.length <= 0
+                        ? "/"
+                        : `/search/${this.state.text}`
+                    }
+                  >
+                    <Button type="submit" className="search_icon">
                       <Icon>search</Icon>
                     </Button>
                   </Link>
@@ -42,6 +47,7 @@ class App extends Component {
                     type="text"
                     name="searchText"
                     onChange={this.handleInput}
+                    disableUnderline={true}
                     placeholder="輸入文字以搜尋內容"
                   />
                 </div>

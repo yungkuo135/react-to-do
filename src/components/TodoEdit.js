@@ -11,7 +11,6 @@ import { connect } from "react-redux";
 class TodoEdit extends Component {
   constructor(props) {
     super(props);
-    console.log("constructor", this.props);
     this.state = {
       isNewTodo: false,
     };
@@ -80,7 +79,6 @@ class TodoEdit extends Component {
   }
 
   render() {
-    //console.log("render.state", this.state);
     const { todo } = this.state;
     const todoForm = todo ? (
       <div className="todo_edit_wrapper">
@@ -153,8 +151,12 @@ class TodoEdit extends Component {
               multiline
             />
           </div>
-          <div class="edit_btns">
-            <Button variant="contained" onClick={this.handleSubmit}>
+          <div className="edit_btns">
+            <Button
+              variant="contained"
+              disabled={!this.state.todo.title}
+              onClick={this.handleSubmit}
+            >
               儲存
             </Button>
             <Button variant="outlined" onClick={this.handleCancel}>
@@ -187,7 +189,6 @@ const defaultTodo = [
 ];
 const mapStateToPorps = (state, ownProps) => {
   const todoId = ownProps.match?.params.id;
-  console.log("ownProps", ownProps);
   const todo = todoId
     ? state.todo.todos.filter((todo) => todo.id === todoId)
     : defaultTodo;
