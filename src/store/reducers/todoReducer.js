@@ -113,15 +113,18 @@ const initState = {
 const todoReducer = (state = initState, action) => {
   switch (action.type) {
     case "ADD_TODO":
-      const latestId = state.todos[0].id;
+      const newAddTodoState = JSON.parse(JSON.stringify(state));
+      const latestId = newAddTodoState.todos[0].id;
       let newTodo = action.todo;
       newTodo.id = (parseInt(latestId, 10) + 1).toString();
-      state.todos.unshift({ ...newTodo });
+      newAddTodoState.todos.unshift({ ...newTodo });
       return {
         ...state,
+        todos: newAddTodoState.todos,
       };
     case "SET_TAG":
-      state.todos.forEach((todo) => {
+      const newSetTagState = JSON.parse(JSON.stringify(state));
+      newSetTagState.todos.forEach((todo) => {
         if (todo.id === action.payload.id) {
           todo[action.payload.tag] = action.payload.value;
           todo.important_icon = todo.important ? "error" : "error_outline";
@@ -131,6 +134,7 @@ const todoReducer = (state = initState, action) => {
       });
       return {
         ...state,
+        todos: newSetTagState.todos,
       };
     case "EDIT_TODO":
       const id = action.todo.id;
@@ -142,7 +146,8 @@ const todoReducer = (state = initState, action) => {
       });
       newEditState.todos = newTodoArr;
       return {
-        ...newEditState,
+        ...state,
+        todos: newEditState.todos,
       };
     default:
       const newState = JSON.parse(JSON.stringify(state));

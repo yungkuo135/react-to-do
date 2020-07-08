@@ -4,31 +4,13 @@ import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 
 class TodoContent extends Component {
-  handleSetTag = (tag, id) => {
-    let value;
-    const newTodos = this.state.todos.map((todo) => {
-      if (todo.id === id) {
-        todo[tag] = todo[tag] ? 0 : 1;
-        value = todo[tag];
-        todo.important_icon = todo.important ? "error" : "error_outline";
-        todo.stared_icon = todo.stared ? "star" : "star_border";
-        todo.done_icon = todo.done ? "check_box" : "crop_square";
-      }
-      return todo;
-    });
-    this.setState({
-      todos: newTodos,
-    });
-    this.props.setTag(id, tag, value);
+  handleSetTag = (tag, todo) => {
+    todo[tag] = todo[tag] ? 0 : 1;
+    const value = todo[tag];
+    this.props.setTag(todo.id, tag, value);
   };
-
-  componentDidMount() {
-    this.setState({
-      todos: this.props.todos,
-    });
-  }
   render() {
-    const todos = this.state?.todos;
+    const todos = this.props.todos;
     const todoItems =
       todos && todos.length ? (
         todos.map((todo) => {
@@ -62,7 +44,7 @@ class TodoContent extends Component {
               <div className="item_icons">
                 <Tooltip title="重要">
                   <IconButton
-                    onClick={() => this.handleSetTag("important", todo.id)}
+                    onClick={() => this.handleSetTag("important", todo)}
                   >
                     <Icon style={{ color: `${todo.important ? "red" : ""}` }}>
                       {todo.important_icon}
@@ -70,18 +52,14 @@ class TodoContent extends Component {
                   </IconButton>
                 </Tooltip>
                 <Tooltip title="優先">
-                  <IconButton
-                    onClick={() => this.handleSetTag("stared", todo.id)}
-                  >
+                  <IconButton onClick={() => this.handleSetTag("stared", todo)}>
                     <Icon style={{ color: `${todo.stared ? "#ffc107" : ""}` }}>
                       {todo.stared_icon}
                     </Icon>
                   </IconButton>
                 </Tooltip>
                 <Tooltip title="完成">
-                  <IconButton
-                    onClick={() => this.handleSetTag("done", todo.id)}
-                  >
+                  <IconButton onClick={() => this.handleSetTag("done", todo)}>
                     <Icon style={{ color: `${todo.done ? "blue" : ""}` }}>
                       {todo.done_icon}
                     </Icon>
