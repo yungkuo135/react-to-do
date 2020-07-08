@@ -5,7 +5,7 @@ import Sidebar from "./components/Sidebar";
 import TodoContent from "./components/TodoContent";
 import TodoEdit from "./components/TodoEdit";
 
-import { BrowserRouter, Switch, Route, Link } from "react-router-dom";
+import { HashRouter, Switch, Route, Link } from "react-router-dom";
 import { ThemeProvider } from "@material-ui/core/styles";
 import Theme from "./Theme";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -24,7 +24,7 @@ class App extends Component {
   render() {
     return (
       <ThemeProvider theme={Theme}>
-        <BrowserRouter basename="/react-to-do">
+        <HashRouter basename="/">
           <div className="App">
             <Toolbar className="home_info">
               <div className="info_title">
@@ -85,7 +85,7 @@ class App extends Component {
               </Switch>
             </div>
           </div>
-        </BrowserRouter>
+        </HashRouter>
       </ThemeProvider>
     );
   }
